@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.dram.KirovDramTheaterSource;
 import org.example.habr.HabrParser;
 import org.example.habr.HabrSettings;
 import org.example.model.Publication;
@@ -56,7 +57,8 @@ public class Main {
 
     private static void runTheaters() {
         List<TheaterSource> sources = List.of(
-                new SpasskayaTheaterSource()
+                new SpasskayaTheaterSource(),
+                new KirovDramTheaterSource()
         );
 
         TheaterAggregator aggregator = new TheaterAggregator(
