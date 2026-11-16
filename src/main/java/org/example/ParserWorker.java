@@ -13,8 +13,8 @@ public class ParserWorker<T> {
         void onCompleted(Object sender);
     }
 
-    private Parser<T> parser;                 // вытащить данные из страницы
-    private ParserSettings parserSettings;    // что и откуда парсить
+    private Parser<T> parser;
+    private ParserSettings parserSettings;
     private HtmlLoader loader;
     private volatile boolean isActive;
 
@@ -25,16 +25,8 @@ public class ParserWorker<T> {
         this.parser = parser;
     }
 
-    public Parser<T> getParser() {
-        return parser;
-    }
-
     public void setParser(Parser<T> parser) {
         this.parser = parser;
-    }
-
-    public ParserSettings getParserSettings() {
-        return parserSettings;
     }
 
     public void setParserSettings(ParserSettings parserSettings) {
@@ -55,9 +47,6 @@ public class ParserWorker<T> {
         worker();
     }
 
-    public void abort() {
-        isActive = false;
-    }
 
     private void worker() throws IOException {
         for (int i = parserSettings.getStartPoint(); i <= parserSettings.getEndPoint(); i++) {

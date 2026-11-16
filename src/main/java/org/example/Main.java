@@ -41,7 +41,7 @@ public class Main {
 
     private static void runHabr() throws IOException {
         ParserWorker<ArrayList<Publication>> worker = new ParserWorker<>(new HabrParser());
-        worker.setParserSettings(new HabrSettings(1, 1)); // страницы с 1 по 1
+        worker.setParserSettings(new HabrSettings(1, 1));
 
         JsonSaver jsonSaver = new JsonSaver(OUTPUT_DIR.resolve("habr.json"));
         ImageSaver imageSaver = new ImageSaver(IMAGES_DIR.resolve("habr"), new ImageDownloader());
