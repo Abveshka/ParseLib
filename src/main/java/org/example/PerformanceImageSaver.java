@@ -12,11 +12,11 @@ public class PerformanceImageSaver {
 
     private final ImageDownloader downloader;
 
-    public PerformanceImageSaver(ImageDownloader downloader) {
+    public PerformanceImageSaver(final ImageDownloader downloader) {
         this.downloader = downloader;
     }
 
-    public void save(List<Performance> performances, Path folder) {
+    public void save(final List<Performance> performances, final Path folder) {
         for (Performance performance : performances) {
             String url = performance.getImageUrl();
             if (url == null || url.isBlank()) {
@@ -32,10 +32,10 @@ public class PerformanceImageSaver {
 
             try {
                 downloader.download(url, target);
-            } catch (IOException | IllegalArgumentException e) {
+            } catch (IOException | IllegalArgumentException thrown) {
                 log.warn("Не удалось скачать картинку показа '{}' ({})",
-                        performance.getTitle(), url, e);
-            } catch (InterruptedException e) {
+                        performance.getTitle(), url, thrown);
+            } catch (InterruptedException thrown) {
                 Thread.currentThread().interrupt();
                 log.warn("Скачивание картинок прервано");
                 return;
@@ -43,14 +43,17 @@ public class PerformanceImageSaver {
         }
     }
 
-    private String fileNameFrom(String url) {
+    private String fileNameFrom(final String url) {
         int queryIndex = url.indexOf('?');
-        String cleanUrl = (queryIndex == -1) ? url : url.substring(0, queryIndex);
+        String cleanUrl = (queryIndex == -1)
+                ? url
+                : url.substring(0, queryIndex);
 
         int lastSlashIndex = cleanUrl.lastIndexOf('/');
-        String fileName = (lastSlashIndex == -1) ? cleanUrl : cleanUrl.substring(lastSlashIndex + 1);
+        String fileName = (lastSlashIndex == -1)
+                ? cleanUrl
+                : cleanUrl.substring(lastSlashIndex + 1);
 
         return fileName.isBlank() ? null : fileName;
     }
-
 }

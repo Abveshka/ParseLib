@@ -1,6 +1,7 @@
 package org.example.dram;
 
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.example.AfishaTextParser;
 import org.example.Parser;
 import org.example.model.Performance;
@@ -27,8 +28,8 @@ public class KirovDramParser implements Parser<List<Performance>> {
     private final AfishaTextParser textParser = new AfishaTextParser();
 
     @Override
-    public List<Performance> parse(Document document) {
-        List<Performance> result = new ArrayList<>();
+    public List<Performance> parse(final Document document) {
+        val result = new ArrayList<Performance>();
         YearMonth currentMonth = null;
 
         for (Element row : document.select(ROW_SELECTOR)) {
@@ -37,8 +38,8 @@ public class KirovDramParser implements Parser<List<Performance>> {
                 continue;
             }
             try {
-                Element titleElement = row.selectFirst(TITLE_SELECTOR);
-                Element dateElement = row.selectFirst(DATE_SELECTOR);
+                val titleElement = row.selectFirst(TITLE_SELECTOR);
+                val dateElement = row.selectFirst(DATE_SELECTOR);
                 if (titleElement == null || dateElement == null) {
                     log.warn("В карточке нет названия или даты: {}", row.text());
                     continue;
@@ -51,19 +52,24 @@ public class KirovDramParser implements Parser<List<Performance>> {
                     continue;
                 }
 
-                Element ageElement = row.selectFirst(AGE_SELECTOR);
-                Integer ageRating = (ageElement == null) ? null : textParser.parseAge(ageElement.text());
+                val ageElement = row.selectFirst(AGE_SELECTOR);
+                Integer ageRating = (ageElement == null)
+                        ? null
+                        : textParser.parseAge(ageElement.text());
 
-                Element durationLabel = row.selectFirst(DURATION_SELECTOR);
+                val durationLabel = row.selectFirst(DURATION_SELECTOR);
                 Duration duration = (durationLabel == null)
-                        ? null : textParser.parseDuration(durationLabel.parent().text());
+                        ? null
+                        : textParser.parseDuration(durationLabel.parent().text());
 
-                Element imageLink = row.selectFirst(IMAGE_SELECTOR);
-                String imageUrl = (imageLink == null) ? "" : imageLink.absUrl("src");
+                val imageLink = row.selectFirst(IMAGE_SELECTOR);
+                String imageUrl = (imageLink == null)
+                        ? ""
+                        : imageLink.absUrl("src");
 
                 result.add(new Performance(title, startsAt, duration, ageRating, imageUrl));
-            } catch (Exception e) {
-                log.warn("Не удалось разобрать карточку афиши: {}", row.text(), e);
+            } catch (Exception thrown) {
+                log.warn("Не удалось разобрать карточку афиши: {}", row.text(), thrown);
             }
         }
         return result;

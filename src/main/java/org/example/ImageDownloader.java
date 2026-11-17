@@ -19,7 +19,7 @@ public class ImageDownloader {
             .followRedirects(HttpClient.Redirect.NORMAL)
             .build();
 
-    public void download(String url, Path target) throws IOException, InterruptedException {
+    public void download(final String url, final Path target) throws IOException, InterruptedException {
         Files.createDirectories(target.getParent());
         if (Files.exists(target)) {
             log.debug("Картинка {} уже есть, пропускаю", target);

@@ -1,6 +1,7 @@
 package org.example.theater;
 
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.example.PerformanceImageSaver;
 import org.example.TheaterJsonWriter;
 import org.example.model.Theater;
@@ -17,27 +18,27 @@ public class TheaterAggregator {
     private final TheaterJsonWriter jsonWriter;
     private final PerformanceImageSaver imageSaver;
 
-    public TheaterAggregator(List<TheaterSource> sources,
-                             TheaterJsonWriter jsonWriter,
-                             PerformanceImageSaver imageSaver) {
+    public TheaterAggregator(final List<TheaterSource> sources,
+                             final TheaterJsonWriter jsonWriter,
+                             final PerformanceImageSaver imageSaver) {
         this.sources = sources;
         this.jsonWriter = jsonWriter;
         this.imageSaver = imageSaver;
     }
 
-    public void run(Path jsonFile, Path imagesRoot) {
-        List<Theater> theaters = new ArrayList<>();
+    public void run(final Path jsonFile, final Path imagesRoot) {
+        val theaters = new ArrayList<Theater>();
 
         for (TheaterSource source : sources) {
             try {
-                Theater theater = source.fetch();
+                val theater = source.fetch();
                 theaters.add(theater);
                 imageSaver.save(theater.getPerformances(),
                         imagesRoot.resolve(source.getFolderName()));
                 log.info("Театр '{}': показов {}", theater.getTitle(),
                         theater.getPerformances().size());
-            } catch (IOException e) {
-                log.error("Не удалось загрузить афишу театра '{}'", source.getFolderName(), e);
+            } catch (IOException thrown) {
+                log.error("Не удалось загрузить афишу театра '{}'", source.getFolderName(), thrown);
             }
         }
 

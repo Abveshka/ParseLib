@@ -20,7 +20,7 @@ public class JsonSaver implements ParserWorker.OnNewDataHandler<ArrayList<Public
     private final List<Publication> collected = new ArrayList<>();
     private final ObjectMapper mapper;
 
-    public JsonSaver(Path file) {
+    public JsonSaver(final Path file) {
         this.file = file;
         this.mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
@@ -29,14 +29,12 @@ public class JsonSaver implements ParserWorker.OnNewDataHandler<ArrayList<Public
     }
 
     @Override
-    public void onNewData(Object sender, ArrayList<Publication> data) {
-        for (Publication publication : data) {
-            collected.add(publication);
-        }
+    public void onNewData(final Object sender, final ArrayList<Publication> data) {
+        collected.addAll(data);
     }
 
     @Override
-    public void onCompleted(Object sender) {
+    public void onCompleted(final Object sender) {
         try {
             Path parent = file.getParent();
             if (parent != null) {
@@ -44,8 +42,8 @@ public class JsonSaver implements ParserWorker.OnNewDataHandler<ArrayList<Public
             }
             mapper.writeValue(file.toFile(), collected);
             log.info("Сохранено публикаций в JSON: {} ({})", collected.size(), file);
-        } catch (IOException e) {
-            log.error("Не удалось сохранить JSON в {}", file, e);
+        } catch (IOException thrown) {
+            log.error("Не удалось сохранить JSON в {}", file, thrown);
         }
     }
 }

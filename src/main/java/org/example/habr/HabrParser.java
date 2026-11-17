@@ -1,6 +1,7 @@
 package org.example.habr;
 
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.example.Parser;
 import org.example.model.Publication;
 import org.jsoup.nodes.Document;
@@ -25,13 +26,13 @@ public class HabrParser implements Parser<ArrayList<Publication>> {
     private static final String PREVIEW_SELECTOR = "div.article-formatted-body";
 
     @Override
-    public ArrayList<Publication> parse(Document document) {
-        ArrayList<Publication> result = new ArrayList<>();
+    public ArrayList<Publication> parse(final Document document) {
+        val result = new ArrayList<Publication>();
         for (Element card : document.select(CARD_SELECTOR)) {
             try {
                 result.add(parseCard(card));
-            } catch (Exception e) {
-                log.warn("Не удалось разобрать карточку id={}", card.id(), e);
+            } catch (Exception thrown) {
+                log.warn("Не удалось разобрать карточку id={}", card.id(), thrown);
             }
         }
         log.info("На странице разобрано публикаций: {}", result.size());
@@ -59,13 +60,17 @@ public class HabrParser implements Parser<ArrayList<Publication>> {
     }
 
     private String textOf(Element card, String selector) {
-        Element e = card.selectFirst(selector);
-        return e == null ? "" : e.text();
+        val element = card.selectFirst(selector);
+        return element == null
+                ? ""
+                : element.text();
     }
 
     private String attrOf(Element card, String selector, String attribute) {
-        Element e = card.selectFirst(selector);
-        return e == null ? "" : e.attr(attribute);
+        val element = card.selectFirst(selector);
+        return element == null
+                ? ""
+                : element.attr(attribute);
     }
 
     private Instant parseDate(String id, String value) {
@@ -75,8 +80,8 @@ public class HabrParser implements Parser<ArrayList<Publication>> {
         }
         try {
             return Instant.parse(value);
-        } catch (DateTimeParseException e) {
-            log.warn("Публикация {}: не удалось разобрать дату '{}'", id, value, e);
+        } catch (DateTimeParseException thrown) {
+            log.warn("Публикация {}: не удалось разобрать дату '{}'", id, value, thrown);
             return null;
         }
     }
@@ -91,7 +96,7 @@ public class HabrParser implements Parser<ArrayList<Publication>> {
         if (s.isEmpty()) {
             return 0;
         }
-        double multiplier = 1;
+        double multiplier = 1.0;
         char last = Character.toUpperCase(s.charAt(s.length() - 1));
         if (last == 'K' || last == 'К') {
             multiplier = 1_000;
@@ -102,8 +107,8 @@ public class HabrParser implements Parser<ArrayList<Publication>> {
         }
         try {
             return (int) Math.round(Double.parseDouble(s) * multiplier);
-        } catch (NumberFormatException e) {
-            log.warn("Не удалось разобрать число просмотров '{}'", text, e);
+        } catch (NumberFormatException thrown) {
+            log.warn("Не удалось разобрать число просмотров '{}'", text, thrown);
             return 0;
         }
     }

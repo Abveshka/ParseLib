@@ -20,10 +20,9 @@ public class Publication {
 
     @Override
     public String toString() {
-        return String.format(
-                "[%s] %s%n  автор: %s | %s | %d мин | %d просмотров%n  хабы: %s%n  картинка: %s -> %s%n  превью: %s%n",
-                id, title, author, publishedAt, readingTimeMinutes, views,
-                String.join(", ", hubs), imageUrl, imageFile, shortPreview());
+        return "[%s] %s%n  автор: %s | %s | %d мин | %d просмотров%n  хабы: %s%n  картинка: %s -> %s%n  превью: %s%n"
+                .formatted(id, title, author, publishedAt, readingTimeMinutes, views,
+                        String.join(", ", hubs), imageUrl, imageFile, shortPreview());
     }
 
     private String shortPreview() {

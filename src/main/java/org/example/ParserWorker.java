@@ -1,5 +1,6 @@
 package org.example;
 import org.jsoup.nodes.Document;
+import lombok.val;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -13,7 +14,7 @@ public class ParserWorker<T> {
         void onCompleted(Object sender);
     }
 
-    private Parser<T> parser;
+    private final Parser<T> parser;
     private ParserSettings parserSettings;
     private HtmlLoader loader;
     private volatile boolean isActive;
@@ -25,9 +26,6 @@ public class ParserWorker<T> {
         this.parser = parser;
     }
 
-    public void setParser(Parser<T> parser) {
-        this.parser = parser;
-    }
 
     public void setParserSettings(ParserSettings parserSettings) {
         this.parserSettings = parserSettings;
@@ -49,13 +47,13 @@ public class ParserWorker<T> {
 
 
     private void worker() throws IOException {
-        for (int i = parserSettings.getStartPoint(); i <= parserSettings.getEndPoint(); i++) {
+        for (int pageNumber = parserSettings.getStartPoint(); pageNumber <= parserSettings.getEndPoint(); pageNumber++) {
             if (!isActive) {
                 notifyCompleted();
                 return;
             }
-            Document document = loader.getSourceByPageId(i);
-            T result = parser.parse(document);
+            Document document = loader.getSourceByPageId(pageNumber);
+            val result = parser.parse(document);
             notifyNewData(result);
         }
         notifyCompleted();

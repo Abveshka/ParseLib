@@ -28,7 +28,7 @@ public class AfishaTextParser {
             Map.entry("декабрь", 12)
     );
 
-    public YearMonth parseMonth(String text) {
+    public YearMonth parseMonth(final String text) {
         String[] parts = text.trim().toLowerCase().split("\\s+");
         if (parts.length != 2) {
             log.warn("Неожиданный формат заголовка месяца: '{}'", text);
@@ -43,13 +43,13 @@ public class AfishaTextParser {
             String yearText = parts[1];
             int year = Integer.parseInt(yearText);
             return YearMonth.of(year, month);
-        } catch (NumberFormatException e) {
-            log.warn("Год не удалось разобрать: '{}'", parts[1], e);
+        } catch (NumberFormatException thrown) {
+            log.warn("Год не удалось разобрать: '{}'", parts[1], thrown);
             return null;
         }
     }
 
-    public LocalDateTime parseStartsAt(String text, YearMonth currentMonth) {
+    public LocalDateTime parseStartsAt(final String text, final YearMonth currentMonth) {
 
         if (currentMonth == null) {
             return null;
@@ -66,13 +66,13 @@ public class AfishaTextParser {
             LocalTime time = LocalTime.parse(parts[parts.length - 1]);
 
             return currentMonth.atDay(day).atTime(time);
-        } catch (NumberFormatException | DateTimeException e) {
-            log.warn("Не удалось разобрать дату или время показа: '{}'", text, e);
+        } catch (NumberFormatException | DateTimeException thrown) {
+            log.warn("Не удалось разобрать дату или время показа: '{}'", text, thrown);
             return null;
         }
     }
 
-    public Integer parseAge(String text) {
+    public Integer parseAge(final String text) {
         String digits = text.replaceAll("\\D+", "");
         if (digits.isEmpty()) {
             log.warn("Не удалось распознать возрастное ограничение: '{}'", text);
@@ -81,7 +81,7 @@ public class AfishaTextParser {
         return Integer.parseInt(digits);
     }
 
-    public Duration parseDuration(String text) {
+    public Duration parseDuration(final String text) {
         if (text == null || text.isBlank()) {
             return null;
         }

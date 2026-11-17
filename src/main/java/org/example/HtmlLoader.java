@@ -12,16 +12,16 @@ public class HtmlLoader {
 
     private final String url;
 
-    public HtmlLoader(ParserSettings settings) {
+    public HtmlLoader(final ParserSettings settings) {
         url = settings.getBaseUrl() + "/" + settings.getPrefix();
     }
 
-    public Document getSourceByPageId(int id) throws IOException {
-        String currentUrl = url.replace("{CurrentId}", Integer.toString(id));
+    public Document getSourceByPageId(final int pageNumber) throws IOException {
+        String currentUrl = url.replace("{CurrentId}", Integer.toString(pageNumber));
         return getSourceByUrl(currentUrl);
     }
 
-    public Document getSourceByUrl(String pageUrl) throws IOException {
+    public Document getSourceByUrl(final String pageUrl) throws IOException {
         return Jsoup.connect(pageUrl)
                 .userAgent(USER_AGENT)
                 .timeout(TIMEOUT_MILLIS)

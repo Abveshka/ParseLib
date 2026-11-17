@@ -24,7 +24,7 @@ public class TheaterJsonWriter {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
-    public void save(List<Theater> theaters, Path file) {
+    public void save(final List<Theater> theaters, final Path file) {
         try {
             Path parent = file.getParent();
             if (parent != null) {
@@ -32,8 +32,8 @@ public class TheaterJsonWriter {
             }
             mapper.writeValue(file.toFile(), theaters);
             log.info("Сохранено театров в JSON: {} ({})", theaters.size(), file);
-        } catch (IOException e) {
-            log.error("Не удалось сохранить JSON в {}", file, e);
+        } catch (IOException thrown) {
+            log.error("Не удалось сохранить JSON в {}", file, thrown);
         }
     }
 }

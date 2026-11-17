@@ -7,6 +7,7 @@ import org.example.model.Publication;
 import org.example.theater.TheaterAggregator;
 import org.example.theater.TheaterSource;
 import org.example.spasskaya.SpasskayaTheaterSource;
+import lombok.val;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -43,8 +44,8 @@ public class Main {
         ParserWorker<ArrayList<Publication>> worker = new ParserWorker<>(new HabrParser());
         worker.setParserSettings(new HabrSettings(1, 1));
 
-        JsonSaver jsonSaver = new JsonSaver(OUTPUT_DIR.resolve("habr.json"));
-        ImageSaver imageSaver = new ImageSaver(IMAGES_DIR.resolve("habr"), new ImageDownloader());
+        val jsonSaver = new JsonSaver(OUTPUT_DIR.resolve("habr.json"));
+        val imageSaver = new ImageSaver(IMAGES_DIR.resolve("habr"), new ImageDownloader());
 
         worker.addOnNewDataHandler(new NewData());
         worker.addOnNewDataHandler(imageSaver);
@@ -58,10 +59,9 @@ public class Main {
     private static void runTheaters() {
         List<TheaterSource> sources = List.of(
                 new SpasskayaTheaterSource(),
-                new KirovDramTheaterSource()
-        );
+                new KirovDramTheaterSource());
 
-        TheaterAggregator aggregator = new TheaterAggregator(
+        val aggregator = new TheaterAggregator(
                 sources,
                 new TheaterJsonWriter(),
                 new PerformanceImageSaver(new ImageDownloader()));

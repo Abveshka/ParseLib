@@ -13,24 +13,25 @@ public class ImageSaver implements ParserWorker.OnNewDataHandler<ArrayList<Publi
     private final Path folder;
     private final ImageDownloader downloader;
 
-    public ImageSaver(Path folder, ImageDownloader downloader) {
+    public ImageSaver(final Path folder, final ImageDownloader downloader) {
         this.folder = folder;
         this.downloader = downloader;
     }
 
     @Override
-    public void onNewData(Object sender, ArrayList<Publication> data) {
+    public void onNewData(final Object sender, final ArrayList<Publication> data) {
         for (Publication publication : data) {
-            if (isBlank(publication.getImageUrl()) || isBlank(publication.getImageFile())) {
+            if (publication.getImageUrl() == null || publication.getImageUrl().isBlank()
+                    || publication.getImageFile() == null || publication.getImageFile().isBlank()) {
                 continue;
             }
             try {
                 downloader.download(publication.getImageUrl(),
                         folder.resolve(publication.getImageFile()));
-            } catch (IOException e) {
+            } catch (IOException thrown) {
                 log.warn("Не удалось скачать картинку публикации {} ({})",
-                        publication.getId(), publication.getImageUrl(), e);
-            } catch (InterruptedException e) {
+                        publication.getId(), publication.getImageUrl(), thrown);
+            } catch (InterruptedException thrown) {
                 Thread.currentThread().interrupt();
                 log.warn("Скачивание картинки {} прервано", publication.getId());
                 return;
@@ -38,7 +39,4 @@ public class ImageSaver implements ParserWorker.OnNewDataHandler<ArrayList<Publi
         }
     }
 
-    private boolean isBlank(String value) {
-        return value == null || value.isBlank();
-    }
 }
