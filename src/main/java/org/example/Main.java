@@ -37,7 +37,7 @@ public class Main {
     private static final Path IMAGES_DIR = Path.of("images");
 
     public static void main(String[] args) throws IOException {
-        //runHabr();
+        runHabr();
         runTheaters();
     }
 
