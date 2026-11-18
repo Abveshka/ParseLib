@@ -3,6 +3,7 @@ package org.example;
 import org.example.dram.KirovDramTheaterSource;
 import org.example.habr.HabrParser;
 import org.example.habr.HabrSettings;
+import org.example.kukla.KirovKuklaTheaterSource;
 import org.example.model.Publication;
 import org.example.theater.TheaterAggregator;
 import org.example.theater.TheaterSource;
@@ -36,7 +37,7 @@ public class Main {
     private static final Path IMAGES_DIR = Path.of("images");
 
     public static void main(String[] args) throws IOException {
-        runHabr();
+        //runHabr();
         runTheaters();
     }
 
@@ -59,7 +60,8 @@ public class Main {
     private static void runTheaters() {
         List<TheaterSource> sources = List.of(
                 new SpasskayaTheaterSource(),
-                new KirovDramTheaterSource());
+                new KirovDramTheaterSource(),
+                new KirovKuklaTheaterSource());
 
         val aggregator = new TheaterAggregator(
                 sources,
