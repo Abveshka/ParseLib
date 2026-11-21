@@ -11,16 +11,16 @@ import org.parsers.habr.model.Publication;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.nio.file.Path;
 
 @Slf4j
 @FieldDefaults(makeFinal = true)
 public class HabrJsonWriter implements ParserWorker.OnNewDataHandler<ArrayList<Publication>>, ParserWorker.OnCompleted {
-      Path file;
-      List<Publication> collected = new ArrayList<>();
-      ObjectMapper mapper;
+    Path file;
+    List<Publication> collected = new ArrayList<>();
+    ObjectMapper mapper;
 
     public HabrJsonWriter(final Path file) {
         this.file = file;

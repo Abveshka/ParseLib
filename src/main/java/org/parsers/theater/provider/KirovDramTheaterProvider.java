@@ -1,11 +1,11 @@
 package org.parsers.theater.provider;
 
-import org.parsers.common.html.HtmlLoader;
 import lombok.val;
-import org.parsers.theater.settings.KirovDramSettings;
-import org.parsers.theater.model.Theater;
+import org.parsers.common.html.HtmlLoader;
 import org.parsers.theater.TheaterProvider;
+import org.parsers.theater.model.Theater;
 import org.parsers.theater.parser.KirovDramParser;
+import org.parsers.theater.settings.KirovDramSettings;
 
 import java.io.IOException;
 

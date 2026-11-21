@@ -3,7 +3,11 @@ package org.parsers.theater.parser;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
-import java.time.*;
+import java.time.DateTimeException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.YearMonth;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -13,18 +17,18 @@ public class AfishaTextParser {
     private static final Pattern HOURS_PATTERN = Pattern.compile("(\\d+)\\s*час");
     private static final Pattern MINUTES_PATTERN = Pattern.compile("(\\d+)\\s*мин");
     private static final Map<String, Integer> MONTHS = Map.ofEntries(
-            Map.entry("январь", 1),
-            Map.entry("февраль", 2),
-            Map.entry("март", 3),
-            Map.entry("апрель", 4),
-            Map.entry("май", 5),
-            Map.entry("июнь", 6),
-            Map.entry("июль", 7),
-            Map.entry("август", 8),
-            Map.entry("сентябрь", 9),
-            Map.entry("октябрь", 10),
-            Map.entry("ноябрь", 11),
-            Map.entry("декабрь", 12)
+        Map.entry("январь", 1),
+        Map.entry("февраль", 2),
+        Map.entry("март", 3),
+        Map.entry("апрель", 4),
+        Map.entry("май", 5),
+        Map.entry("июнь", 6),
+        Map.entry("июль", 7),
+        Map.entry("август", 8),
+        Map.entry("сентябрь", 9),
+        Map.entry("октябрь", 10),
+        Map.entry("ноябрь", 11),
+        Map.entry("декабрь", 12)
     );
 
     public YearMonth parseMonth(final String text) {

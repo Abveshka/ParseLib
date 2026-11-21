@@ -14,7 +14,7 @@ import java.nio.file.StandardCopyOption;
 
 @Slf4j
 public class ImageDownloader {
-     final HttpClient client = HttpClient.newBuilder()
+    final HttpClient client = HttpClient.newBuilder()
         .followRedirects(HttpClient.Redirect.NORMAL)
         .build();
 

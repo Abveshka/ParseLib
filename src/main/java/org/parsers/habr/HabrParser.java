@@ -2,10 +2,10 @@ package org.parsers.habr;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.parsers.common.html.Parser;
-import org.parsers.habr.model.Publication;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.parsers.common.html.Parser;
+import org.parsers.habr.model.Publication;
 
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
@@ -14,13 +14,13 @@ import java.util.List;
 
 @Slf4j
 public class HabrParser implements Parser<ArrayList<Publication>> {
-    private static final String CARD_SELECTOR    = "article.tm-articles-list__item";
-    private static final String TITLE_SELECTOR   = "a.tm-title__link span";
-    private static final String AUTHOR_SELECTOR  = "a.tm-user-info__username";
-    private static final String DATE_SELECTOR    = "time[datetime]";
+    private static final String CARD_SELECTOR = "article.tm-articles-list__item";
+    private static final String TITLE_SELECTOR = "a.tm-title__link span";
+    private static final String AUTHOR_SELECTOR = "a.tm-user-info__username";
+    private static final String DATE_SELECTOR = "time[datetime]";
     private static final String READING_SELECTOR = "span.tm-article-reading-time__label";
-    private static final String VIEWS_SELECTOR   = "span.tm-icon-counter__value";
-    private static final String IMAGE_SELECTOR   = "img.lead-image";
+    private static final String VIEWS_SELECTOR = "span.tm-icon-counter__value";
+    private static final String IMAGE_SELECTOR = "img.lead-image";
     private static final String HUBS_SELECTOR = "a.tm-publication-hub__link";
     private static final String PREVIEW_SELECTOR = "div.article-formatted-body";
 

@@ -2,9 +2,9 @@ package org.parsers.theater.parser;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.jsoup.nodes.Document;
 import org.parsers.common.html.Parser;
 import org.parsers.theater.model.Performance;
-import org.jsoup.nodes.Document;
 
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class KirovDramParser implements Parser<List<Performance>> {
     private static final String AGE_SELECTOR = "div.value_limit";
     private static final String IMAGE_SELECTOR = "img";
 
-     final AfishaTextParser textParser = new AfishaTextParser();
+    final AfishaTextParser textParser = new AfishaTextParser();
 
     @Override
     public List<Performance> parse(final Document document) {

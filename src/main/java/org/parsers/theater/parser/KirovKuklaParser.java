@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.parsers.common.html.HtmlLoader;
-import org.parsers.theater.model.Performance;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.parsers.common.html.HtmlLoader;
+import org.parsers.theater.model.Performance;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

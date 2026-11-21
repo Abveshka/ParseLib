@@ -19,13 +19,13 @@ public class ParserWorker<T> {
         void onCompleted(Object sender);
     }
 
-     final Parser<T> parser;
-     ParserSettings parserSettings;
-     HtmlLoader loader;
-     volatile boolean isActive;
+    final Parser<T> parser;
+    ParserSettings parserSettings;
+    HtmlLoader loader;
+    volatile boolean isActive;
 
-     final ArrayList<OnNewDataHandler<T>> onNewDataList = new ArrayList<>();
-     final ArrayList<OnCompleted> onCompletedList = new ArrayList<>();
+    final ArrayList<OnNewDataHandler<T>> onNewDataList = new ArrayList<>();
+    final ArrayList<OnCompleted> onCompletedList = new ArrayList<>();
 
     public void setParserSettings(ParserSettings parserSettings) {
         this.parserSettings = parserSettings;

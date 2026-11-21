@@ -5,13 +5,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.jsoup.nodes.Document;
 import org.parsers.common.html.HtmlLoader;
 import org.parsers.common.html.Parser;
 import org.parsers.theater.model.Performance;
-import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-import java.time.*;
+import java.time.Duration;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +34,8 @@ public class SpasskayaParser implements Parser<List<Performance>> {
     @NonNull HtmlLoader loader;
     Map<String, ShowDetails> detailsCache = new HashMap<>();
 
-    private record ShowDetails(Duration duration, String imageUrl) { }
+    private record ShowDetails(Duration duration, String imageUrl) {
+    }
 
 
     @Override

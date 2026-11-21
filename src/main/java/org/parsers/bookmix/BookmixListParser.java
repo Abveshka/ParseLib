@@ -1,10 +1,10 @@
 package org.parsers.bookmix;
 
 import lombok.val;
-import org.parsers.bookmix.model.Review;
-import org.parsers.common.html.Parser;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.parsers.bookmix.model.Review;
+import org.parsers.common.html.Parser;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -3,10 +3,10 @@ package org.parsers.bookmix;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.parsers.bookmix.model.Review;
-import org.parsers.common.html.HtmlLoader;
 import org.jsoup.HttpStatusException;
 import org.jsoup.nodes.Document;
+import org.parsers.bookmix.model.Review;
+import org.parsers.common.html.HtmlLoader;
 
 import java.io.IOException;
 import java.net.SocketException;
@@ -26,13 +26,13 @@ public final class ConcurrentCrawler {
     private static final int MAX_ATTEMPTS = 4;
     private static final long FIRST_PAUSE_MS = 1000;
 
-     BookmixSettings settings;
-     HtmlLoader loader;
-     BookmixListParser listParser = new BookmixListParser();
-     DiscussionTextExtractor extractor = new DiscussionTextExtractor();
+    BookmixSettings settings;
+    HtmlLoader loader;
+    BookmixListParser listParser = new BookmixListParser();
+    DiscussionTextExtractor extractor = new DiscussionTextExtractor();
 
-     AtomicInteger errors = new AtomicInteger();
-     AtomicInteger retries = new AtomicInteger();
+    AtomicInteger errors = new AtomicInteger();
+    AtomicInteger retries = new AtomicInteger();
 
     public ConcurrentCrawler(final BookmixSettings settings) {
         this.settings = settings;

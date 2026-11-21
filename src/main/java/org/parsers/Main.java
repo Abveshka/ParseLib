@@ -1,24 +1,23 @@
 package org.parsers;
 
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.parsers.bookmix.BookmixSettings;
 import org.parsers.bookmix.ConcurrentCrawler;
-import org.parsers.bookmix.model.Review;
 import org.parsers.bookmix.output.ReviewJsonWriter;
-import org.parsers.common.json.JsonFileWriter;
 import org.parsers.common.image.ImageDownloader;
-import org.parsers.theater.provider.KirovDramTheaterProvider;
+import org.parsers.common.json.JsonFileWriter;
 import org.parsers.habr.HabrParser;
 import org.parsers.habr.HabrSettings;
-import org.parsers.habr.output.ImageSaver;
-import org.parsers.habr.output.HabrJsonWriter;
 import org.parsers.habr.ParserWorker;
-import org.parsers.theater.provider.KirovKuklaTheaterProvider;
 import org.parsers.habr.model.Publication;
-import org.parsers.theater.output.PerformanceImageSaver;
+import org.parsers.habr.output.HabrJsonWriter;
+import org.parsers.habr.output.ImageSaver;
 import org.parsers.theater.TheaterAggregator;
+import org.parsers.theater.output.PerformanceImageSaver;
+import org.parsers.theater.provider.KirovDramTheaterProvider;
+import org.parsers.theater.provider.KirovKuklaTheaterProvider;
 import org.parsers.theater.provider.SpasskayaTheaterProvider;
-import lombok.val;
 
 import java.io.IOException;
 import java.nio.file.Path;

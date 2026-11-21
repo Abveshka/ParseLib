@@ -17,9 +17,9 @@ import java.util.List;
 @FieldDefaults(makeFinal = true)
 @RequiredArgsConstructor
 public class TheaterAggregator {
-     List<TheaterProvider> sources;
-     JsonFileWriter jsonWriter;
-     PerformanceImageSaver imageSaver;
+    List<TheaterProvider> sources;
+    JsonFileWriter jsonWriter;
+    PerformanceImageSaver imageSaver;
 
     public void run(final Path jsonFile, final Path imagesRoot) throws IOException {
         val theaters = new ArrayList<Theater>();
