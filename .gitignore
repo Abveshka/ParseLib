@@ -38,4 +38,8 @@ build/
 ### Mac OS ###
 .DS_Store
 
-.idea/, logs/, images/, output/, target/
+/.idea/
+/logs/
+/output/
+/target/
+/images/
