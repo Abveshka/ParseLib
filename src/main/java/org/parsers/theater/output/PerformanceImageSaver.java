@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
+import static org.apache.commons.lang3.StringUtils.defaultIfBlank;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 @Slf4j
 @FieldDefaults(makeFinal = true)
 @RequiredArgsConstructor
@@ -20,7 +23,7 @@ public class PerformanceImageSaver {
     public void save(final List<Performance> performances, final Path folder) {
         for (val performance : performances) {
             val url = performance.imageUrl();
-            if (url == null || url.isBlank()) {
+            if (isBlank(url)) {
                 continue;
             }
 
@@ -56,6 +59,6 @@ public class PerformanceImageSaver {
             ? cleanUrl
             : cleanUrl.substring(lastSlashIndex + 1);
 
-        return fileName.isBlank() ? null : fileName;
+        return defaultIfBlank(fileName, null);
     }
 }

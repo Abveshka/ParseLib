@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 @Slf4j
 @FieldDefaults(makeFinal = true)
 @RequiredArgsConstructor
@@ -23,9 +25,7 @@ public class ImageSaver implements ParserWorker.OnNewDataHandler<ArrayList<Publi
     @Override
     public void onNewData(final Object sender, final ArrayList<Publication> data) {
         for (val publication : data) {
-            if (publication.imageUrl() == null || publication.imageUrl().isBlank()
-                || publication.imageFile() == null || publication.imageFile().isBlank()) {
-
+            if (!isNotBlank(publication.imageUrl()) || !isNotBlank(publication.imageFile())) {
                 continue;
             }
             try {

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import lombok.NonNull;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,7 +19,7 @@ public final class JsonFileWriter {
         .disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS)
         .enable(SerializationFeature.INDENT_OUTPUT);
 
-    public void save(final Object data, final Path file) throws IOException {
+    public void save(@NonNull final Object data, @NonNull final Path file) throws IOException {
         val parent = file.getParent();
         if (parent != null) {
             Files.createDirectories(parent);

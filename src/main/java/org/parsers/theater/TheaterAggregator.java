@@ -1,6 +1,7 @@
 package org.parsers.theater;
 
 import lombok.RequiredArgsConstructor;
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -17,11 +18,11 @@ import java.util.List;
 @FieldDefaults(makeFinal = true)
 @RequiredArgsConstructor
 public class TheaterAggregator {
-    List<TheaterProvider> sources;
-    JsonFileWriter jsonWriter;
-    PerformanceImageSaver imageSaver;
+    @NonNull List<TheaterProvider> sources;
+    @NonNull JsonFileWriter jsonWriter;
+    @NonNull PerformanceImageSaver imageSaver;
 
-    public void run(final Path jsonFile, final Path imagesRoot) throws IOException {
+    public void run(@NonNull final Path jsonFile, @NonNull final Path imagesRoot) throws IOException {
         val theaters = new ArrayList<Theater>();
 
         for (val source : sources) {

@@ -1,18 +1,19 @@
 package org.parsers.habr.model;
 
+import lombok.NonNull;
 import java.time.Instant;
 import java.util.List;
 
 public record Publication(
-    String id,
-    String title,
-    String author,
-    Instant publishedAt,
+    @NonNull String id,
+    @NonNull String title,
+    @NonNull String author,
+    @NonNull Instant publishedAt,
     int readingTimeMinutes,
     int views,
     String imageUrl,
     String imageFile,
-    List<String> hubs,
+    @NonNull List<String> hubs,
     String preview) {
 
     @Override

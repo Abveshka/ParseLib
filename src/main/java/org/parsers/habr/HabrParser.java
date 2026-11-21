@@ -12,6 +12,8 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 @Slf4j
 public class HabrParser implements Parser<ArrayList<Publication>> {
     private static final String CARD_SELECTOR = "article.tm-articles-list__item";
@@ -74,7 +76,7 @@ public class HabrParser implements Parser<ArrayList<Publication>> {
     }
 
     private Instant parseDate(final String id, final String value) {
-        if (value.isEmpty()) {
+        if (isBlank(value)) {
             log.warn("Публикация {}: не найдена дата", id);
             return null;
         }
@@ -140,7 +142,7 @@ public class HabrParser implements Parser<ArrayList<Publication>> {
     }
 
     private String buildImageFileName(final String id, final String imageUrl) {
-        if (imageUrl == null || imageUrl.isEmpty()) {
+        if (isBlank(imageUrl)) {
             return null;
         }
         val queryStart = imageUrl.indexOf('?');

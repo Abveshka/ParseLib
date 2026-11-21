@@ -1,6 +1,8 @@
 package org.parsers.common.html;
 
+import lombok.experimental.FieldDefaults;
 import lombok.val;
+import lombok.NonNull;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,13 +11,14 @@ import org.parsers.common.settings.ParserSettings;
 import java.io.IOException;
 import java.util.Map;
 
+@FieldDefaults(makeFinal = true)
 public class HtmlLoader {
     private static final String USER_AGENT = "Mozilla/5.0";
     private static final int TIMEOUT_MILLIS = 10_000;
 
-    final String url;
+    String url;
 
-    public HtmlLoader(final ParserSettings settings) {
+    public HtmlLoader(@NonNull final ParserSettings settings) {
         url = settings.getBaseUrl() + "/" + settings.getPrefix();
     }
 
@@ -24,7 +27,7 @@ public class HtmlLoader {
         return getSourceByUrl(currentUrl);
     }
 
-    public Document getSourceByUrl(final String pageUrl) throws IOException {
+    public Document getSourceByUrl(@NonNull final String pageUrl) throws IOException {
         return Jsoup.connect(pageUrl)
             .userAgent(USER_AGENT)
             .timeout(TIMEOUT_MILLIS)
@@ -32,9 +35,9 @@ public class HtmlLoader {
     }
 
     public String postForm(
-        final String postUrl, final String referer,
-        final Map<String, String> formData,
-        final Map<String, String> cookies) throws IOException {
+        @NonNull final String postUrl, @NonNull final String referer,
+        @NonNull final Map<String, String> formData,
+        @NonNull final Map<String, String> cookies) throws IOException {
 
         return Jsoup.connect(postUrl)
             .userAgent(USER_AGENT)
@@ -50,7 +53,7 @@ public class HtmlLoader {
             .body();
     }
 
-    public Connection.Response getResponseByUrl(final String pageUrl) throws IOException {
+    public Connection.Response getResponseByUrl(@NonNull final String pageUrl) throws IOException {
         return Jsoup.connect(pageUrl)
             .userAgent(USER_AGENT)
             .timeout(TIMEOUT_MILLIS)

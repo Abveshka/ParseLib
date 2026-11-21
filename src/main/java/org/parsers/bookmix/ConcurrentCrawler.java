@@ -1,6 +1,7 @@
 package org.parsers.bookmix;
 
 import lombok.experimental.FieldDefaults;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.jsoup.HttpStatusException;
@@ -26,15 +27,15 @@ public final class ConcurrentCrawler {
     private static final int MAX_ATTEMPTS = 4;
     private static final long FIRST_PAUSE_MS = 1000;
 
-    BookmixSettings settings;
-    HtmlLoader loader;
+    @NonNull BookmixSettings settings;
+    @NonNull HtmlLoader loader;
     BookmixListParser listParser = new BookmixListParser();
     DiscussionTextExtractor extractor = new DiscussionTextExtractor();
 
     AtomicInteger errors = new AtomicInteger();
     AtomicInteger retries = new AtomicInteger();
 
-    public ConcurrentCrawler(final BookmixSettings settings) {
+    public ConcurrentCrawler(@NonNull final BookmixSettings settings) {
         this.settings = settings;
         this.loader = new HtmlLoader(settings);
     }

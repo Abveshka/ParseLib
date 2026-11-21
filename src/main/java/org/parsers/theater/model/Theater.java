@@ -1,8 +1,9 @@
 package org.parsers.theater.model;
 
+import lombok.NonNull;
 import java.util.List;
 
 public record Theater(
-    String title,
-    List<Performance> performances) {
+    @NonNull String title,
+    @NonNull List<Performance> performances) {
 }

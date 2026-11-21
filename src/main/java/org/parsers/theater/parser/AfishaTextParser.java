@@ -12,6 +12,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import static org.apache.commons.lang3.StringUtils.getDigits;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 @Slf4j
 public class AfishaTextParser {
     private static final Pattern HOURS_PATTERN = Pattern.compile("(\\d+)\\s*час");
@@ -76,8 +80,8 @@ public class AfishaTextParser {
     }
 
     public Integer parseAge(final String text) {
-        val digits = text.replaceAll("\\D+", "");
-        if (digits.isEmpty()) {
+        val digits = getDigits(text);
+        if (isEmpty(digits)) {
             log.warn("Не удалось распознать возрастное ограничение: '{}'", text);
             return null;
         }
@@ -85,7 +89,7 @@ public class AfishaTextParser {
     }
 
     public Duration parseDuration(final String text) {
-        if (text == null || text.isBlank()) {
+        if (isBlank(text)) {
             return null;
         }
 
