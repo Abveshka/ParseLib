@@ -56,9 +56,18 @@ public class HabrParser implements Parser<ArrayList<Publication>> {
 
         val imageFile = buildImageFileName(id, imageUrl);
 
-        return new Publication(
-            id, title, author, publishedAt,
-            readingTime, views, imageUrl, imageFile, hubs, preview);
+        return Publication.builder()
+            .id(id)
+            .title(title)
+            .author(author)
+            .publishedAt(publishedAt)
+            .readingTimeMinutes(readingTime)
+            .views(views)
+            .imageUrl(imageUrl)
+            .imageFile(imageFile)
+            .hubs(hubs)
+            .preview(preview)
+            .build();
     }
 
     private String textOf(final Element card, final String selector) {

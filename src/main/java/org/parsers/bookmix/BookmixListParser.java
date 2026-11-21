@@ -32,23 +32,24 @@ public final class BookmixListParser implements Parser<List<Review>> {
                 : href.indexOf('#');
             val snippet = extractSnippet(block);
 
-            result.add(new Review(
-                book == null
+            result.add(Review.builder()
+                .bookTitle(book == null
                     ? null
-                    : book.text(),
-                block.select("p.universal-blocks-description a[href*=bookauthor.phtml]").eachText(),
-                user == null
+                    : book.text())
+                .authors(block.select("p.universal-blocks-description a[href*=bookauthor.phtml]").eachText())
+                .reviewAuthor(user == null
                     ? null
-                    : user.text(),
-                parseStars(rating),
-                snippet,
-                hash < 0
+                    : user.text())
+                .stars(parseStars(rating))
+                .text(snippet)
+                .discussionUrl(hash < 0
                     ? href
-                    : href.substring(0, hash),
-                hash < 0
+                    : href.substring(0, hash))
+                .commentId(hash < 0
                     ? null
-                    : href.substring(hash + 1),
-                snippet.isEmpty() || snippet.endsWith(ELLIPSIS)));
+                    : href.substring(hash + 1))
+                .needsFullText(snippet.isEmpty() || snippet.endsWith(ELLIPSIS))
+                .build());
         }
         return result;
     }

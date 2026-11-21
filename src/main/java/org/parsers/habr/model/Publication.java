@@ -1,9 +1,11 @@
 package org.parsers.habr.model;
 
 import lombok.NonNull;
+import lombok.Builder;
 import java.time.Instant;
 import java.util.List;
 
+@Builder
 public record Publication(
     @NonNull String id,
     @NonNull String title,
