@@ -18,9 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
-@FieldDefaults(makeFinal = true)
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true)
+@Slf4j
 public class SpasskayaParser implements Parser<List<Performance>> {
     private static final String ROW_SELECTOR = "table.myafisha tr";
     private static final String MONTH_HEADER_SELECTOR = "h2";

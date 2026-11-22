@@ -1,7 +1,7 @@
 package org.parsers.common.image;
 
-import lombok.extern.slf4j.Slf4j;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +19,9 @@ public class ImageDownloader {
         .followRedirects(HttpClient.Redirect.NORMAL)
         .build();
 
-    public void download(@NonNull final String url, @NonNull final Path target) throws IOException, InterruptedException {
+    public void download(
+        @NonNull final String url,
+        @NonNull final Path target) throws IOException, InterruptedException {
         Files.createDirectories(target.getParent());
         if (Files.exists(target)) {
             log.debug("Картинка {} уже есть, пропускаю", target);

@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
-@Slf4j
-@FieldDefaults(makeFinal = true)
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true)
+@Slf4j
 public class ImageSaver implements ParserWorker.OnNewDataHandler<ArrayList<Publication>> {
     @NonNull Path folder;
     @NonNull ImageDownloader downloader;

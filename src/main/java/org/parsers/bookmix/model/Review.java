@@ -1,14 +1,14 @@
 package org.parsers.bookmix.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.With;
-import lombok.NonNull;
 import lombok.Builder;
+import lombok.NonNull;
+import lombok.With;
 
 import java.util.List;
 
-@With
 @Builder
+@With
 public record Review(
     @NonNull String bookTitle,
     @NonNull List<String> authors,

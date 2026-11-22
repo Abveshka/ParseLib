@@ -15,8 +15,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 @FieldDefaults(makeFinal = true)
+@Slf4j
 public class HabrJsonWriter implements ParserWorker.OnNewDataHandler<ArrayList<Publication>>, ParserWorker.OnCompleted {
     Path file;
     List<Publication> collected = new ArrayList<>();

@@ -14,9 +14,9 @@ import java.util.List;
 import static org.apache.commons.lang3.StringUtils.defaultIfBlank;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
-@Slf4j
-@FieldDefaults(makeFinal = true)
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true)
+@Slf4j
 public class PerformanceImageSaver {
     ImageDownloader downloader;
 

@@ -12,9 +12,9 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
-@FieldDefaults(makeFinal = true)
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true)
+@Slf4j
 public class ReviewJsonWriter {
     @NonNull Path file;
     @NonNull JsonFileWriter writer;

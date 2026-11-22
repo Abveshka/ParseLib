@@ -100,5 +100,4 @@ public class KirovKuklaTheaterProvider implements TheaterProvider {
         }
         return json.path("content").asText();
     }
-
 }

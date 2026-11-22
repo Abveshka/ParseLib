@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import static org.apache.commons.lang3.StringUtils.getDigits;
-import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 @Slf4j
 public class AfishaTextParser {

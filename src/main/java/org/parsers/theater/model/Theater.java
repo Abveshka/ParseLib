@@ -1,6 +1,7 @@
 package org.parsers.theater.model;
 
 import lombok.NonNull;
+
 import java.util.List;
 
 public record Theater(

@@ -1,7 +1,8 @@
 package org.parsers.habr.model;
 
-import lombok.NonNull;
 import lombok.Builder;
+import lombok.NonNull;
+
 import java.time.Instant;
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package org.parsers.theater;
 
-import lombok.RequiredArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -14,9 +14,9 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
-@FieldDefaults(makeFinal = true)
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true)
+@Slf4j
 public class TheaterAggregator {
     @NonNull List<TheaterProvider> sources;
     @NonNull JsonFileWriter jsonWriter;

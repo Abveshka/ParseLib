@@ -6,8 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Getter
-@FieldDefaults(makeFinal = true)
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
+@FieldDefaults(makeFinal = true)
 public abstract class ParserSettings {
     String baseUrl;
     String prefix;

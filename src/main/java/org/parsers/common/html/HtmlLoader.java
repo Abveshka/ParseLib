@@ -1,8 +1,8 @@
 package org.parsers.common.html;
 
+import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import lombok.val;
-import lombok.NonNull;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

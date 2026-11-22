@@ -1,7 +1,7 @@
 package org.parsers.bookmix;
 
-import lombok.experimental.FieldDefaults;
 import lombok.NonNull;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.jsoup.HttpStatusException;
@@ -21,8 +21,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Slf4j
 @FieldDefaults(makeFinal = true)
+@Slf4j
 public final class ConcurrentCrawler {
     private static final int MAX_ATTEMPTS = 4;
     private static final long FIRST_PAUSE_MS = 1000;

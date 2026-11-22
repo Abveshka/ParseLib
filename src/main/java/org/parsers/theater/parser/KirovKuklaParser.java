@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-@Slf4j
-@FieldDefaults(makeFinal = true)
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true)
+@Slf4j
 public class KirovKuklaParser {
     private static final String ITEM_SELECTOR = "div.spec-item";
     private static final String TITLE_SELECTOR = ".name a";
