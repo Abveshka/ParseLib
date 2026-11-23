@@ -40,7 +40,6 @@ public class SpasskayaParser implements Parser<List<Performance>> {
     ) {
     }
 
-
     @Override
     public List<Performance> parse(@NonNull final Document document) {
         val result = new ArrayList<Performance>();

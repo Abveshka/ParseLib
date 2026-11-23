@@ -18,8 +18,7 @@ public class KirovDramTheaterProvider implements TheaterProvider {
     @Override
     public Theater fetch() throws IOException {
         val settings = new KirovDramSettings();
-        val loader = new HtmlLoader(settings);
-        val afisha = loader.getSourceByUrl(settings.getBaseUrl());
+        val afisha = new HtmlLoader(settings).getSourceByUrl(settings.getBaseUrl());
         val performances = new KirovDramParser().parse(afisha);
 
         return new Theater("Кировский областной драматический театр", performances);

@@ -40,7 +40,6 @@ public class HtmlLoader {
         @NonNull final Map<String, String> formData,
         @NonNull final Map<String, String> cookies
     ) throws IOException {
-
         return Jsoup.connect(postUrl)
             .userAgent(USER_AGENT)
             .referrer(referer)
