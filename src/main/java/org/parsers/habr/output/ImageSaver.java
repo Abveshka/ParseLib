@@ -29,13 +29,14 @@ public class ImageSaver implements ParserWorker.OnNewDataHandler<ArrayList<Publi
                 continue;
             }
             try {
-                downloader.download(
-                    publication.imageUrl(),
-                    folder.resolve(publication.imageFile()));
+                downloader.download(publication.imageUrl(), folder.resolve(publication.imageFile()));
             } catch (IOException thrown) {
                 log.warn(
                     "Не удалось скачать картинку публикации {} ({})",
-                    publication.id(), publication.imageUrl(), thrown);
+                    publication.id(),
+                    publication.imageUrl(),
+                    thrown
+                );
             } catch (InterruptedException thrown) {
                 Thread.currentThread().interrupt();
                 log.warn("Скачивание картинки {} прервано", publication.id());
@@ -43,5 +44,4 @@ public class ImageSaver implements ParserWorker.OnNewDataHandler<ArrayList<Publi
             }
         }
     }
-
 }

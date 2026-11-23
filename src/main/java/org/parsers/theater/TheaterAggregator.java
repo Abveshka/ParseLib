@@ -29,12 +29,8 @@ public class TheaterAggregator {
             try {
                 val theater = source.fetch();
                 theaters.add(theater);
-                imageSaver.save(
-                    theater.performances(),
-                    imagesRoot.resolve(source.getFolderName()));
-                log.info(
-                    "Театр '{}': показов {}", theater.title(),
-                    theater.performances().size());
+                imageSaver.save(theater.performances(), imagesRoot.resolve(source.getFolderName()));
+                log.info("Театр '{}': показов {}", theater.title(), theater.performances().size());
             } catch (IOException thrown) {
                 log.error("Не удалось загрузить афишу театра '{}'", source.getFolderName(), thrown);
             }

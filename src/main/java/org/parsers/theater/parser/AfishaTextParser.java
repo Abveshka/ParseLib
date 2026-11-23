@@ -1,5 +1,7 @@
 package org.parsers.theater.parser;
 
+import jakarta.annotation.Nullable;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
@@ -35,8 +37,10 @@ public class AfishaTextParser {
         Map.entry("декабрь", 12)
     );
 
-    public YearMonth parseMonth(final String text) {
-        String[] parts = text.trim().toLowerCase().split("\\s+");
+    public YearMonth parseMonth(@NonNull final String text) {
+        String[] parts = text.trim()
+            .toLowerCase()
+            .split("\\s+");
         if (parts.length != 2) {
             log.warn("Неожиданный формат заголовка месяца: '{}'", text);
             return null;
@@ -56,8 +60,7 @@ public class AfishaTextParser {
         }
     }
 
-    public LocalDateTime parseStartsAt(final String text, final YearMonth currentMonth) {
-
+    public LocalDateTime parseStartsAt(@NonNull final String text, @Nullable final YearMonth currentMonth) {
         if (currentMonth == null) {
             return null;
         }
@@ -81,14 +84,16 @@ public class AfishaTextParser {
 
     public Integer parseAge(final String text) {
         val digits = getDigits(text);
+
         if (isEmpty(digits)) {
             log.warn("Не удалось распознать возрастное ограничение: '{}'", text);
             return null;
         }
+
         return Integer.parseInt(digits);
     }
 
-    public Duration parseDuration(final String text) {
+    public Duration parseDuration(@Nullable final String text) {
         if (isBlank(text)) {
             return null;
         }

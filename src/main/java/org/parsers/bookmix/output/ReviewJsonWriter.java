@@ -20,7 +20,7 @@ public class ReviewJsonWriter {
     @NonNull JsonFileWriter writer;
     List<Review> collected = new ArrayList<>();
 
-    public void add(final List<Review> reviews) throws IOException {
+    public void add(@NonNull final List<Review> reviews) throws IOException {
         collected.addAll(reviews);
         writer.save(collected, file);
         log.info("Сохранено отзывов в JSON: {} ({})", collected.size(), file);

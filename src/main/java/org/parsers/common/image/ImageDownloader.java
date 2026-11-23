@@ -2,6 +2,7 @@ package org.parsers.common.image;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,18 +22,18 @@ public class ImageDownloader {
 
     public void download(
         @NonNull final String url,
-        @NonNull final Path target) throws IOException, InterruptedException {
+        @NonNull final Path target
+    ) throws IOException, InterruptedException {
         Files.createDirectories(target.getParent());
         if (Files.exists(target)) {
             log.debug("Картинка {} уже есть, пропускаю", target);
             return;
         }
-        HttpRequest request = HttpRequest.newBuilder(URI.create(url))
+        val request = HttpRequest.newBuilder(URI.create(url))
             .header("User-Agent", "Mozilla/5.0")
             .build();
-        HttpResponse<InputStream> response =
-            client.send(request, HttpResponse.BodyHandlers.ofInputStream());
-        try (InputStream in = response.body()) {
+        val response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
+        try (val in = response.body()) {
             if (response.statusCode() != 200) {
                 throw new IOException("HTTP " + response.statusCode());
             }

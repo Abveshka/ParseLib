@@ -35,9 +35,11 @@ public class HtmlLoader {
     }
 
     public String postForm(
-        @NonNull final String postUrl, @NonNull final String referer,
+        @NonNull final String postUrl,
+        @NonNull final String referer,
         @NonNull final Map<String, String> formData,
-        @NonNull final Map<String, String> cookies) throws IOException {
+        @NonNull final Map<String, String> cookies
+    ) throws IOException {
 
         return Jsoup.connect(postUrl)
             .userAgent(USER_AGENT)

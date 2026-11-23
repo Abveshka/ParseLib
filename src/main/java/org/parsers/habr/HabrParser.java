@@ -1,5 +1,7 @@
 package org.parsers.habr;
 
+import jakarta.annotation.Nullable;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.jsoup.nodes.Document;
@@ -48,6 +50,9 @@ public class HabrParser implements Parser<ArrayList<Publication>> {
         }
         val author = textOf(card, AUTHOR_SELECTOR);
         val publishedAt = parseDate(id, attrOf(card, DATE_SELECTOR, "datetime"));
+        if (publishedAt == null) {
+            throw new IllegalStateException("не удалось определить дату публикации");
+        }
         val readingTime = parseNumber(textOf(card, READING_SELECTOR));
         val views = parseViews(textOf(card, VIEWS_SELECTOR));
         val imageUrl = extractImageUrl(card);
@@ -70,21 +75,25 @@ public class HabrParser implements Parser<ArrayList<Publication>> {
             .build();
     }
 
-    private String textOf(final Element card, final String selector) {
+    private String textOf(@NonNull final Element card, @NonNull final String selector) {
         val element = card.selectFirst(selector);
         return element == null
             ? ""
             : element.text();
     }
 
-    private String attrOf(final Element card, final String selector, final String attribute) {
+    private String attrOf(
+        @NonNull final Element card,
+        @NonNull final String selector,
+        @NonNull final String attribute
+    ) {
         val element = card.selectFirst(selector);
         return element == null
             ? ""
             : element.attr(attribute);
     }
 
-    private Instant parseDate(final String id, final String value) {
+    private Instant parseDate(@NonNull final String id, @Nullable final String value) {
         if (isBlank(value)) {
             log.warn("Публикация {}: не найдена дата", id);
             return null;
@@ -97,20 +106,22 @@ public class HabrParser implements Parser<ArrayList<Publication>> {
         }
     }
 
-    private int parseNumber(final String text) {
+    private int parseNumber(@NonNull final String text) {
         val digits = text.replaceAll("[^0-9]", "");
         return digits.isEmpty()
             ? 0
             : Integer.parseInt(digits);
     }
 
-    private int parseViews(final String text) {
-        String normalized = text.trim().replace(" ", "").replace(",", ".");
+    private int parseViews(@NonNull final String text) {
+        var normalized = text.trim()
+            .replace(" ", "")
+            .replace(",", ".");
         if (normalized.isEmpty()) {
             return 0;
         }
-        double multiplier = 1.0;
-        char last = Character.toUpperCase(normalized.charAt(normalized.length() - 1));
+        var multiplier = 1.0;
+        val last = Character.toUpperCase(normalized.charAt(normalized.length() - 1));
         if (last == 'K' || last == 'К') {
             multiplier = 1_000;
             normalized = normalized.substring(0, normalized.length() - 1);
@@ -126,21 +137,21 @@ public class HabrParser implements Parser<ArrayList<Publication>> {
         }
     }
 
-    private String extractImageUrl(final Element card) {
+    private String extractImageUrl(@NonNull final Element card) {
         val img = card.selectFirst(IMAGE_SELECTOR);
         if (img == null) {
             log.debug("Публикация {}: нет картинки", card.id());
             return "";
         }
+
         String url = img.absUrl("src");
-        if (url.isEmpty()) {
-            url = img.absUrl("data-src");
-        }
-        return url;
+        return url.isEmpty()
+            ? img.absUrl("data-src")
+            : url;
     }
 
-    private List<String> parseHubs(final Element card) {
-        List<String> hubs = new ArrayList<>();
+    private List<String> parseHubs(@NonNull final Element card) {
+        val hubs = new ArrayList<String>();
         for (val link : card.select(HUBS_SELECTOR)) {
             val name = link.selectFirst("span");
             if (name != null) {
@@ -150,12 +161,14 @@ public class HabrParser implements Parser<ArrayList<Publication>> {
         return hubs;
     }
 
-    private String buildImageFileName(final String id, final String imageUrl) {
+    private String buildImageFileName(@NonNull final String id, @NonNull final String imageUrl) {
         if (isBlank(imageUrl)) {
             return null;
         }
         val queryStart = imageUrl.indexOf('?');
-        val path = queryStart >= 0 ? imageUrl.substring(0, queryStart) : imageUrl;
+        val path = queryStart >= 0
+            ? imageUrl.substring(0, queryStart)
+            : imageUrl;
         val dot = path.lastIndexOf('.');
         val slash = path.lastIndexOf('/');
         val extension = dot > slash

@@ -17,14 +17,23 @@ public record Publication(
     String imageUrl,
     String imageFile,
     @NonNull List<String> hubs,
-    String preview) {
-
+    String preview
+) {
     @Override
     public String toString() {
         return "[%s] %s%n  автор: %s | %s | %d мин | %d просмотров%n  хабы: %s%n  картинка: %s -> %s%n  превью: %s%n"
             .formatted(
-                id, title, author, publishedAt, readingTimeMinutes, views,
-                String.join(", ", hubs), imageUrl, imageFile, shortPreview());
+                id,
+                title,
+                author,
+                publishedAt,
+                readingTimeMinutes,
+                views,
+                String.join(", ", hubs),
+                imageUrl,
+                imageFile,
+                shortPreview()
+            );
     }
 
     private String shortPreview() {

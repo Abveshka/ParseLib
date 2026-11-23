@@ -3,7 +3,6 @@ package org.parsers.bookmix;
 import lombok.val;
 import org.parsers.common.settings.ParserSettings;
 
-
 public final class BookmixSettings extends ParserSettings {
     public static final int PAGE_SIZE = 20;
     private static final String BASE_URL = "https://bookmix.ru";

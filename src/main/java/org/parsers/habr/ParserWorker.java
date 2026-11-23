@@ -46,7 +46,8 @@ public class ParserWorker<T> {
     }
 
     private void worker() throws IOException {
-        for (int pageNumber = parserSettings.getStartPoint(); pageNumber <= parserSettings.getEndPoint(); pageNumber++) {
+        for (int pageNumber = parserSettings.getStartPoint(); pageNumber <= parserSettings
+            .getEndPoint(); pageNumber++) {
             if (!isActive) {
                 notifyCompleted();
                 return;
@@ -58,7 +59,6 @@ public class ParserWorker<T> {
         notifyCompleted();
         isActive = false;
     }
-
 
     private void notifyNewData(T result) {
         for (val handler : onNewDataList) {

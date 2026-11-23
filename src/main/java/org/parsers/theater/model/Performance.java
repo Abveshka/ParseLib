@@ -10,5 +10,6 @@ public record Performance(
     @NonNull LocalDateTime startsAt,
     Duration duration,
     Integer ageRating,
-    String imageUrl) {
+    String imageUrl
+) {
 }

@@ -41,7 +41,7 @@ public final class ConcurrentCrawler {
     }
 
     public List<Review> run(final int threads) throws InterruptedException {
-        final ExecutorService pool = Executors.newFixedThreadPool(threads);
+        val pool = Executors.newFixedThreadPool(threads);
         try {
             val start = System.nanoTime();
             val listed = loadListPages(pool);
@@ -49,17 +49,24 @@ public final class ConcurrentCrawler {
             val reviews = loadFullTexts(pool, listed);
             val end = System.nanoTime();
 
-            log.info("потоков: %d | список: %.1f с | дозагрузка: %.1f с | всего: %.1f с | ошибок: %d | повторов: %d"
-                .formatted(
-                    threads, (middle - start) / 1e9, (end - middle) / 1e9, (end - start) / 1e9,
-                    errors.get(), retries.get()));
+            log.info(
+                "потоков: %d | список: %.1f с | дозагрузка: %.1f с | всего: %.1f с | ошибок: %d | повторов: %d"
+                    .formatted(
+                        threads,
+                        (middle - start) / 1e9,
+                        (end - middle) / 1e9,
+                        (end - start) / 1e9,
+                        errors.get(),
+                        retries.get()
+                    )
+            );
             return reviews;
         } finally {
             pool.shutdown();
         }
     }
 
-    private List<Review> loadListPages(final ExecutorService pool) throws InterruptedException {
+    private List<Review> loadListPages(@NonNull final ExecutorService pool) throws InterruptedException {
         val urls = new ArrayList<String>();
         val futures = new ArrayList<Future<List<Review>>>();
 
@@ -81,12 +88,14 @@ public final class ConcurrentCrawler {
         return reviews;
     }
 
-    private List<Review> loadPage(final String url) throws IOException, InterruptedException {
+    private List<Review> loadPage(@NonNull final String url) throws IOException, InterruptedException {
         return listParser.parse(fetch(url));
     }
 
-    private List<Review> loadFullTexts(final ExecutorService pool, final List<Review> reviews)
-        throws InterruptedException {
+    private List<Review> loadFullTexts(
+        @NonNull final ExecutorService pool,
+        @NonNull final List<Review> reviews
+    ) throws InterruptedException {
         val futures = new ArrayList<Future<Review>>();
 
         for (val review : reviews) {
@@ -101,17 +110,17 @@ public final class ConcurrentCrawler {
         for (int index = 0; index < futures.size(); index++) {
             try {
                 result.add(futures.get(index).get());
-            } catch (ExecutionException e) {
+            } catch (ExecutionException thrown) {
                 val failed = reviews.get(index);
                 errors.incrementAndGet();
-                log.error("обсуждение | {} | {}", describe(e.getCause()), failed.discussionUrl());
+                log.error("обсуждение | {} | {}", describe(thrown.getCause()), failed.discussionUrl());
                 result.add(failed);
             }
         }
         return result;
     }
 
-    private Review loadFullText(final Review review) throws IOException, InterruptedException {
+    private Review loadFullText(@NonNull final Review review) throws IOException, InterruptedException {
         val discussion = fetch(settings.getBaseUrl() + review.discussionUrl());
         val fullText = extractor.extract(discussion, review.commentId());
         return fullText == null
@@ -119,9 +128,9 @@ public final class ConcurrentCrawler {
             : review.withText(fullText).withNeedsFullText(false);
     }
 
-    private Document fetch(final String url) throws IOException, InterruptedException {
+    private Document fetch(@NonNull final String url) throws IOException, InterruptedException {
         long pause = FIRST_PAUSE_MS;
-        for (int attempt = 1; ; attempt++) {
+        for (int attempt = 1;; attempt++) {
             try {
                 return loader.getSourceByUrl(url);
             } catch (IOException thrown) {
@@ -129,16 +138,14 @@ public final class ConcurrentCrawler {
                     throw thrown;
                 }
                 retries.incrementAndGet();
-                log.warn(
-                    "повтор {}/{} через {} мс | {} | {}",
-                    attempt, MAX_ATTEMPTS - 1, pause, describe(thrown), url);
+                log.warn("повтор {}/{} через {} мс | {} | {}", attempt, MAX_ATTEMPTS - 1, pause, describe(thrown), url);
                 Thread.sleep(pause);
                 pause *= 2;
             }
         }
     }
 
-    private static boolean isRetryable(final IOException thrown) {
+    private static boolean isRetryable(@NonNull final IOException thrown) {
         if (thrown instanceof HttpStatusException http) {
             val code = http.getStatusCode();
             return code == 429 || code >= 500;
@@ -146,7 +153,7 @@ public final class ConcurrentCrawler {
         return thrown instanceof SocketTimeoutException || thrown instanceof SocketException;
     }
 
-    private static String describe(final Throwable throwable) {
+    private static String describe(@NonNull final Throwable throwable) {
         if (throwable instanceof HttpStatusException http) {
             val code = http.getStatusCode();
             val name = switch (code) {

@@ -1,5 +1,6 @@
 package org.parsers.theater.output;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +19,9 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 @FieldDefaults(makeFinal = true)
 @Slf4j
 public class PerformanceImageSaver {
-    ImageDownloader downloader;
+    @NonNull ImageDownloader downloader;
 
-    public void save(final List<Performance> performances, final Path folder) {
+    public void save(@NonNull final List<Performance> performances, @NonNull final Path folder) {
         for (val performance : performances) {
             val url = performance.imageUrl();
             if (isBlank(url)) {
@@ -37,9 +38,7 @@ public class PerformanceImageSaver {
             try {
                 downloader.download(url, target);
             } catch (IOException | IllegalArgumentException thrown) {
-                log.warn(
-                    "Не удалось скачать картинку показа '{}' ({})",
-                    performance.title(), url, thrown);
+                log.warn("Не удалось скачать картинку показа '{}' ({})", performance.title(), url, thrown);
             } catch (InterruptedException thrown) {
                 Thread.currentThread().interrupt();
                 log.warn("Скачивание картинок прервано");
@@ -48,7 +47,7 @@ public class PerformanceImageSaver {
         }
     }
 
-    private String fileNameFrom(final String url) {
+    private String fileNameFrom(@NonNull final String url) {
         val queryIndex = url.indexOf('?');
         val cleanUrl = (queryIndex == -1)
             ? url

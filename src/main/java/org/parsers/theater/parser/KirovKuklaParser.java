@@ -1,5 +1,7 @@
 package org.parsers.theater.parser;
 
+import jakarta.annotation.Nullable;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +39,7 @@ public class KirovKuklaParser {
     HtmlLoader loader;
     Map<String, String> imageCache = new HashMap<>();
 
-    public List<Performance> parse(final Document fragment, final YearMonth month) {
+    public List<Performance> parse(@NonNull final Document fragment, @NonNull final YearMonth month) {
         val result = new ArrayList<Performance>();
 
         for (val item : fragment.select(ITEM_SELECTOR)) {
@@ -50,7 +52,7 @@ public class KirovKuklaParser {
         return result;
     }
 
-    private Performance parseItem(final Element item, final YearMonth month) {
+    private Performance parseItem(@NonNull final Element item, @NonNull final YearMonth month) {
         val titleLink = item.selectFirst(TITLE_SELECTOR);
         val dayElement = item.selectFirst(DAY_SELECTOR);
         val timeElement = item.selectFirst(TIME_SELECTOR);
@@ -71,7 +73,7 @@ public class KirovKuklaParser {
         return new Performance(title, startsAt, null, ageRating, imageUrl);
     }
 
-    private Integer parseAge(final Element ageElement) {
+    private Integer parseAge(@Nullable final Element ageElement) {
         if (ageElement == null) {
             return null;
         }
@@ -81,11 +83,11 @@ public class KirovKuklaParser {
             : null;
     }
 
-    private String loadImage(final String showUrl) {
+    private String loadImage(@NonNull final String showUrl) {
         return imageCache.computeIfAbsent(showUrl, this::fetchImage);
     }
 
-    private String fetchImage(final String showUrl) {
+    private String fetchImage(@NonNull final String showUrl) {
         try {
             val img = loader.getSourceByUrl(showUrl).selectFirst(IMAGE_SELECTOR);
             return (img == null)

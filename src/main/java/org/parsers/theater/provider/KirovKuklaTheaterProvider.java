@@ -3,7 +3,6 @@ package org.parsers.theater.provider;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.parsers.common.html.HtmlLoader;
 import org.parsers.theater.TheaterProvider;
@@ -27,8 +26,7 @@ import java.util.Map;
 public class KirovKuklaTheaterProvider implements TheaterProvider {
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private static final Locale RU = new Locale("ru");
-    private static final String SLIDE_SELECTOR =
-        "div.swiper-slide[data-month]:not(.swiper-slide-duplicate)";
+    private static final String SLIDE_SELECTOR = "div.swiper-slide[data-month]:not(.swiper-slide-duplicate)";
     private static final String MONTH_ID_ATTRIBUTE = "data-month";
     private static final Map<String, Month> MONTHS = new HashMap<>();
 
@@ -48,17 +46,21 @@ public class KirovKuklaTheaterProvider implements TheaterProvider {
         val settings = new KirovKuklaSettings();
         val loader = new HtmlLoader(settings);
 
-        Connection.Response afishaResponse = loader.getResponseByUrl(settings.getBaseUrl());
+        val afishaResponse = loader.getResponseByUrl(settings.getBaseUrl());
         val afisha = afishaResponse.parse();
-        Map<String, String> cookies = afishaResponse.cookies();
+        val cookies = afishaResponse.cookies();
 
         val parser = new KirovKuklaParser(loader);
         val performances = new ArrayList<Performance>();
-        int year = LocalDate.now().getYear();
-        int previousMonth = 0;
+        var year = LocalDate.now().getYear();
+        var previousMonth = 0;
 
         for (val slide : afisha.select(SLIDE_SELECTOR)) {
-            val month = MONTHS.get(slide.text().trim().toLowerCase(RU));
+            val month = MONTHS.get(
+                slide.text()
+                    .trim()
+                    .toLowerCase(RU)
+            );
             if (month == null) {
                 log.warn("Не распознан месяц '{}'", slide.text());
                 continue;
@@ -82,11 +84,12 @@ public class KirovKuklaTheaterProvider implements TheaterProvider {
     }
 
     private String loadMonthHtml(
-        final HtmlLoader loader, final KirovKuklaSettings settings,
+        final HtmlLoader loader,
+        final KirovKuklaSettings settings,
         final String monthId,
-        final Map<String, String> cookies) throws IOException {
-
-        Map<String, String> form = new LinkedHashMap<>();
+        final Map<String, String> cookies
+    ) throws IOException {
+        val form = new LinkedHashMap<String, String>();
         form.put("resource", KirovKuklaSettings.RESOURCE_ID);
         form.put("id_res", monthId);
         form.put("ajaxchunk_name", KirovKuklaSettings.CHUNK_NAME);

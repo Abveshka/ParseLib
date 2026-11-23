@@ -1,5 +1,6 @@
 package org.parsers.theater.parser;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.jsoup.nodes.Document;
@@ -23,7 +24,7 @@ public class KirovDramParser implements Parser<List<Performance>> {
     final AfishaTextParser textParser = new AfishaTextParser();
 
     @Override
-    public List<Performance> parse(final Document document) {
+    public List<Performance> parse(@NonNull final Document document) {
         val result = new ArrayList<Performance>();
         YearMonth currentMonth = null;
 

@@ -34,12 +34,15 @@ public class SpasskayaParser implements Parser<List<Performance>> {
     @NonNull HtmlLoader loader;
     Map<String, ShowDetails> detailsCache = new HashMap<>();
 
-    private record ShowDetails(Duration duration, String imageUrl) {
+    private record ShowDetails(
+        Duration duration,
+        String imageUrl
+    ) {
     }
 
 
     @Override
-    public List<Performance> parse(final Document document) {
+    public List<Performance> parse(@NonNull final Document document) {
         val result = new ArrayList<Performance>();
         YearMonth currentMonth = null;
 
@@ -79,7 +82,7 @@ public class SpasskayaParser implements Parser<List<Performance>> {
         return result;
     }
 
-    private ShowDetails fetchDetails(final String showUrl) {
+    private ShowDetails fetchDetails(@NonNull final String showUrl) {
         try {
             val page = loader.getSourceByUrl(showUrl);
 
@@ -100,7 +103,7 @@ public class SpasskayaParser implements Parser<List<Performance>> {
         }
     }
 
-    private ShowDetails loadDetails(final String showUrl) {
+    private ShowDetails loadDetails(@NonNull final String showUrl) {
         return detailsCache.computeIfAbsent(showUrl, this::fetchDetails);
     }
 }

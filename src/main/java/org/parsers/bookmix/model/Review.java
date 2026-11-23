@@ -15,13 +15,8 @@ public record Review(
     @NonNull String reviewAuthor,
     int stars,
     @NonNull String text,
-
-    @JsonIgnore
-    String discussionUrl,
-
-    @JsonIgnore
-    String commentId,
-
-    @JsonIgnore
-    boolean needsFullText) {
+    @JsonIgnore String discussionUrl,
+    @JsonIgnore String commentId,
+    @JsonIgnore boolean needsFullText
+) {
 }

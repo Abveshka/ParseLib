@@ -84,7 +84,7 @@ public class Main {
     }
 
     private static void runHabr() throws IOException {
-        ParserWorker<ArrayList<Publication>> worker = new ParserWorker<>(new HabrParser());
+        val worker = new ParserWorker<>(new HabrParser());
         worker.setParserSettings(new HabrSettings(1, 1));
 
         val jsonSaver = new HabrJsonWriter(OUTPUT_DIR.resolve("habr.json"));
@@ -103,20 +103,20 @@ public class Main {
         val sources = List.of(
             new SpasskayaTheaterProvider(),
             new KirovDramTheaterProvider(),
-            new KirovKuklaTheaterProvider());
+            new KirovKuklaTheaterProvider()
+        );
 
         val aggregator = new TheaterAggregator(
             sources,
             new JsonFileWriter(),
-            new PerformanceImageSaver(new ImageDownloader()));
+            new PerformanceImageSaver(new ImageDownloader())
+        );
 
         aggregator.run(OUTPUT_DIR.resolve("afisha.json"), IMAGES_DIR);
     }
 
     private static void runReviews() throws IOException, InterruptedException {
-        val writer = new ReviewJsonWriter(
-            OUTPUT_DIR.resolve("reviews.json"),
-            new JsonFileWriter());
+        val writer = new ReviewJsonWriter(OUTPUT_DIR.resolve("reviews.json"), new JsonFileWriter());
         val start = System.nanoTime();
 
         for (int first = 1; first <= TOTAL_PAGES; first += CHUNK) {
@@ -127,8 +127,6 @@ public class Main {
             log.info("страницы до {} готовы, отзывов: {}", last, writer.size());
         }
 
-        log.info(
-            "ГОТОВО: {} отзывов, {} мин", writer.size(),
-            "%.1f".formatted((System.nanoTime() - start) / 60e9));
+        log.info("ГОТОВО: {} отзывов, {} мин", writer.size(), "%.1f".formatted((System.nanoTime() - start) / 60e9));
     }
 }

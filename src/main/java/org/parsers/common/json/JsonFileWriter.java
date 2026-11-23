@@ -13,8 +13,7 @@ import java.nio.file.Path;
 
 @Slf4j
 public final class JsonFileWriter {
-    final ObjectMapper mapper = new ObjectMapper()
-        .registerModule(new JavaTimeModule())
+    final ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule())
         .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
         .disable(SerializationFeature.WRITE_DURATIONS_AS_TIMESTAMPS)
         .enable(SerializationFeature.INDENT_OUTPUT);
